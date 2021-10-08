@@ -35,6 +35,8 @@ class TransactionController
             // Dois controllers parecidos, que fazem coisas iguais. Porém, mantendo-os
             // separados podemos permitir que seja feita a manutenção de forma mais
             // rápida, pois este é da API e pode se comportar de maneira diferente
+            // visto que esta é uma aplicação pequena essa duplicação não é tão
+            // custosa como outras que poderiam ocorrer em outros locais
             $transaction = $this->db->transaction(function () use ($request) {
                 return $this->transactionHandler->create(
                     $request->get('wallet_payer_id', auth()->user()->walletId()),
