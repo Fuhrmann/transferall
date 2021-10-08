@@ -11,14 +11,22 @@ class LoadTransactionsForUser
 {
     public function load(User $user) : Collection
     {
-        $transactions = Transaction::with('payeeWallet.owner')
+        return Transaction::with('payeeWallet.owner')
             ->where(function (Builder $q) use ($user) {
                 $q->where('wallet_payer_id', $user->walletId())
                     ->orWhere('wallet_payee_id', $user->walletId());
             })
             ->orderBy('created_at')
-            ->get();
-
-        return $transactions;
+            ->get()
+            ->map(function (Transaction $transaction) use ($user) {
+                return [
+                    'id'      => $transaction->id,
+                    'from'    => $transaction->payer()->name,
+                    'to'      => $transaction->payee()->name,
+                    'ammount' => $transaction->ammount,
+                    'in'      => $transaction->payee()->id === $user->id,
+                    'date'    => $transaction->created_at,
+                ];
+            });
     }
 }

@@ -37,6 +37,9 @@ que o console do MySQL irá abrir em seu terminal pronto para ser utilizado.
 
 ---
 
+api/v1/users->
+api/v1/transactions/1 ->
+
 ### Sobre a escolha do framework PHP ###
 
 O Laravel hoje em dia é um dos frameworks mais utilizados e já possuo mais de 9 anos de experiência trabalhando nele. Visto que o Laravel provê agilidade no processo optei por usar ele pois traz rapidez no desenvolvimento e clareza no código.

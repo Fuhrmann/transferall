@@ -33,10 +33,20 @@
         <tbody>
         @forelse($transactions as $transaction)
             <tr>
-                <td>{{ $transaction->payeeWallet->owner->name }}</td>
-                <td>R$ {{ $transaction->ammount }}</td>
-                <td>{{ $transaction->created_at }}</td>
-                <td><a href="{{ route('transaction.show', $transaction) }}" class="btn btn-primary">Detalhes</a></td>
+                <td>
+                    @if ($transaction['in'])
+                        {{ $transaction['from'] }}
+                    @else
+                        {{ $transaction['to'] }}
+                    @endif
+                </td>
+                <td>
+                    <span class="{{ $transaction['in'] ? 'text-success' : 'text-danger' }}">
+                        {{ $transaction['ammount'] }}
+                    </span>
+                </td>
+                <td>{{ $transaction['date'] }}</td>
+                <td><a href="{{ route('transaction.show', $transaction['id']) }}" class="btn btn-primary">Detalhes</a></td>
             </tr>
         @empty
             <tr>

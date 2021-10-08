@@ -5,8 +5,12 @@
     <table class="table">
         <tbody>
         <tr>
-            <td><b>Enviado para:</b></td>
-            <td>{{ $transaction->payeeWallet->owner->name }}</td>
+            <td><b>Quem enviou:</b></td>
+            <td>{{ $transaction->payer()->name }}</td>
+        </tr>
+        <tr>
+            <td><b>Quem recebeu:</b></td>
+            <td>{{ $transaction->payee()->name }}</td>
         </tr>
         <tr>
             <td><b>Valor:</b></td>

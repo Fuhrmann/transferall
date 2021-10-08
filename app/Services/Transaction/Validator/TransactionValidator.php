@@ -12,7 +12,7 @@ class TransactionValidator
         ValidateAmmount::class,
         IsNotCompany::class,
         HasEnoughBalance::class,
-        GatewayAuthorization::class
+        GatewayAuthorization::class,
     ];
 
     public function __construct(private Pipeline $pipeline)
@@ -22,9 +22,9 @@ class TransactionValidator
     /**
      * Validates a transaction.
      *
-     * @param  int  $walletPayerId The wallet's ID where the money comes from.
-     * @param  int  $walletPayeeId The wallet's ID where the money is being sent to.
-     * @param  float  $ammount The ammount being sent.
+     * @param  int  $walletPayerId  The wallet's ID where the money comes from.
+     * @param  int  $walletPayeeId  The wallet's ID where the money is being sent to.
+     * @param  float  $ammount  The ammount being sent.
      *
      * @return bool
      */

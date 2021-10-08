@@ -1,38 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Exceptions\TransactionValidationException;
 use App\Http\Requests\TransactionRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
-use App\Models\Wallet;
 use App\Notifications\NewTransfer;
 use App\Services\Transaction\TransactionHandler;
 use Exception;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\MessageBag;
 use Throwable;
 
-class TransactionController extends Controller
+class TransactionController
 {
 
     public function __construct(private TransactionHandler $transactionHandler, private DatabaseManager $db)
     {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return View
-     */
-    public function create() : View
-    {
-        $wallets = Wallet::with('owner')->where('owner_id', '<>', auth()->user()->id)->get();
-
-        return view('transaction.create', compact('wallets'));
     }
 
     /**
@@ -41,11 +27,14 @@ class TransactionController extends Controller
      * @param  TransactionRequest  $request
      *
      * @throws Throwable
-     * @return RedirectResponse
+     * @return JsonResponse|TransactionResource
      */
-    public function store(TransactionRequest $request) : RedirectResponse
+    public function store(TransactionRequest $request) : JsonResponse|TransactionResource
     {
         try {
+            // Dois controllers parecidos, que fazem coisas iguais. Porém, mantendo-os
+            // separados podemos permitir que seja feita a manutenção de forma mais
+            // rápida, pois este é da API e pode se comportar de maneira diferente
             $transaction = $this->db->transaction(function () use ($request) {
                 return $this->transactionHandler->create(
                     $request->get('wallet_payer_id', auth()->user()->walletId()),
@@ -60,13 +49,18 @@ class TransactionController extends Controller
             // que deixar explícito é melhor do que esconder essas chamadas
             $transaction->payee()->notify(new NewTransfer($transaction));
 
-            session()->flash('message', 'Transferência realizada com sucesso!');
-            return redirect()->route('dashboard');
+            return new TransactionResource($transaction);
         } catch (TransactionValidationException $e) {
-            return back()->withErrors(new MessageBag(['catch_exception' => $e->getMessage()]));
+            return response()->json([
+                'code'    => 401,
+                'message' => $e->getMessage(),
+            ]);
         } catch (Exception $e) {
             Log::error($e);
-            return back()->withErrors(new MessageBag(['catch_exception' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.']));
+            return response()->json([
+                'code'    => 500,
+                'message' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.',
+            ]);
         }
     }
 
@@ -75,11 +69,12 @@ class TransactionController extends Controller
      *
      * @param  Transaction  $transaction
      *
-     * @return View
+     * @return TransactionResource
      */
-    public function show(Transaction $transaction) : View
+    public function show(Transaction $transaction) : TransactionResource
     {
-        return view('transaction.show', compact('transaction'));
-    }
+        $transaction->load('payeeWallet', 'payerWallet');
 
+        return new TransactionResource($transaction);
+    }
 }

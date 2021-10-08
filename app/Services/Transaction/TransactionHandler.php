@@ -25,6 +25,9 @@ class TransactionHandler
      */
     public function create(int $walletPayerId, int $walletPayeeId, float $ammount) : Transaction
     {
+        // Tentei manter o código simples e que seja fácil de compreender quando batemos o olho
+        // As rotinas acontecem na ordem que é para acontecer e pedaços de código que realizam
+        // tarefas diferentes, ficam em classes diferentes para melhor organização
         $this->validator->validate($walletPayerId, $walletPayeeId, $ammount);
 
         $transaction = Transaction::create([
