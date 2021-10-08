@@ -1,0 +1,83 @@
+version: '3.7'
+
+networks:
+  app:
+    name: ${APP_PROJECT_NAME}
+
+  proxy:
+    external:
+      name: proxy
+
+services:
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: ${APP_PROJECT_NAME}-nginx
+    init: true
+    restart: unless-stopped
+    depends_on:
+      - php
+      - mysql
+    networks:
+      - app
+      - proxy
+
+  php:
+    image: ${APP_PROJECT_NAME}-php:latest
+    init: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${APP_PROJECT_NAME}-php
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    networks:
+      - app
+
+  mysql:
+    image: mysql:5.7.35
+    init: true
+    container_name: ${APP_PROJECT_NAME}-mysql
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/mysql/scripts:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    networks:
+      - app
+      - proxy
+
+  queue:
+    image: ${APP_PROJECT_NAME}-php:latest
+    init: true
+    restart: always
+    container_name: ${APP_PROJECT_NAME}-queue
+    entrypoint: "/bin/sh -c 'php artisan queue:work redis --sleep=3 --tries=3 --timeout=30'"
+    stop_signal: SIGTERM
+    networks:
+      - app
+    depends_on:
+      - php
+      - redis
+      - mysql
+
+  redis:
+    image: redis:alpine
+    init: true
+    container_name: ${APP_PROJECT_NAME}-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - app
+
+volumes:
+  db-data:
+  redis-data:

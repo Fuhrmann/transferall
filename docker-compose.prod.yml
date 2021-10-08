@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  nginx:
+    image: ${APP_PROJECT_NAME}-nginx:prod
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - ./storage:/var/www/html/storage
+
+  php:
+    image: ${APP_PROJECT_NAME}-php:prod
+    volumes:
+      - ./.env:/var/www/html/.env
+      - ./storage:/var/www/html/storage
+      - ./bootstrap:/var/www/html/bootstrap
+    build:
+      target: producao
+      args:
+        - INSTALL_XDEBUG=false
+        - INSTALL_OPCACHE=true
+
+  queue:
+    image: ${APP_PROJECT_NAME}-php:prod
+    volumes:
+      - ./.env:/var/www/html/.env
+      - ./storage:/var/www/html/storage
+      - ./bootstrap:/var/www/html/bootstrap

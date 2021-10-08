@@ -1,0 +1,30 @@
+# Ignora pastas
+.git/
+tests/
+node_modules/
+vendor/
+public/js/
+storage/*/app*
+storage/*/logs*
+storage/framework/cache/**
+storage/framework/sessions/**
+storage/framework/testing/**
+storage/framework/views/**
+storage/app/temp/**
+storage/logs/**
+bootstrap/cache/**
+
+# Ignora arquivos
+.env.example
+.editorconfig
+.styleci.yml
+.php_cs.cache
+.idea
+phpunit.xml
+.gitignore
+.gitattributes
+Dockerfile
+docker-compose.yml
+docker-compose.prod.yml
+docker-compose.dev.yml
+Makefile
