@@ -63,7 +63,7 @@ class TransactionController extends Controller
             session()->flash('message', 'Transferência realizada com sucesso!');
             return redirect()->route('dashboard');
         } catch (TransactionValidationException $e) {
-            return back()->withErrors(new MessageBag(['catch_exception' => $e->getMessage()]));
+            return back()->withErrors(new MessageBag($e->errors()));
         } catch (Exception $e) {
             Log::error($e);
             return back()->withErrors(new MessageBag(['catch_exception' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.']));

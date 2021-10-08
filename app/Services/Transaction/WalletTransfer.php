@@ -13,6 +13,9 @@ class WalletTransfer
      */
     public function transferWithTransaction(Transaction $transaction) : void
     {
+        // Nenhuma validação ocorre aqui pois a transferência entre
+        // carteiras ocorre somente em uma transação e a validação
+        // já está acontecendo na hora de criar a mesma
         $transaction->load('payerWallet', 'payeeWallet');
         $transaction->payerWallet->subtract($transaction->ammount);
         $transaction->payeeWallet->add($transaction->ammount);

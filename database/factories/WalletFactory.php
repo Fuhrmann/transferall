@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,7 @@ class WalletFactory extends Factory
     public function definition() : array
     {
         return [
-            'owner_id' => '$user',
+            'owner_id' => User::factory(),
             'ammount'  => $this->faker->numberBetween(2000, 10000),
         ];
     }
