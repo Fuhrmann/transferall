@@ -45,6 +45,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * Return the identifier for the user's wallet.
+     *
+     * @return mixed
+     */
+    public function walletId() : int
+    {
+        return $this->wallet->id;
+    }
+
+    /**
      * Returns the wallet's balance.
      *
      * @return float

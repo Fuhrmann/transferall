@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\TransactionHandler;
+use App\Exceptions\TransactionValidationException;
+use App\Http\Requests\TransactionRequest;
+use App\Models\Transaction;
+use App\Models\Wallet;
+use App\Notifications\NewTransfer;
+use App\Services\Transaction\TransactionHandler;
+use Exception;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\MessageBag;
+use Throwable;
 
 class TransactionController extends Controller
 {
 
-    /**
-     * @var TransactionHandler
-     */
-    private $transactionHandler;
-
-    public function __construct(TransactionHandler $transactionHandler)
+    public function __construct(private TransactionHandler $transactionHandler, private DatabaseManager $db)
     {
-        $this->transactionHandler = $transactionHandler;
     }
 
     /**
@@ -27,71 +30,52 @@ class TransactionController extends Controller
      */
     public function create() : View
     {
-        return view('transaction.create');
+        $wallets = Wallet::with('owner')->where('owner_id', '<>', auth()->user()->id)->get();
+
+        return view('transaction.create', compact('wallets'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param  TransactionRequest  $request
      *
-     * @return Response
+     * @throws Throwable
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(TransactionRequest $request) : RedirectResponse
     {
         try {
-            $this->transactionHandler->create($request->payee_id, $request->ammount);
-        } catch (Exception $e) {
+            $transaction = $this->db->transaction(function () use ($request) {
+                return $this->transactionHandler->create(
+                    $request->get('wallet_payer_id', auth()->user()->walletId()),
+                    $request->wallet_payee_id,
+                    $request->ammount
+                );
+            });
 
+            $transaction->payee()->notify(new NewTransfer($transaction));
+
+            session()->flash('message', 'Transferência realizada com sucesso!');
+            return redirect()->route('dashboard');
+        } catch (TransactionValidationException $e) {
+            return back()->withErrors(new MessageBag(['catch_exception' => $e->getMessage()]));
+        } catch (Exception $e) {
+            Log::error($e);
+            return back()->withErrors(new MessageBag(['catch_exception' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.']));
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Transaction  $transaction
      *
-     * @return Response
+     * @return View
      */
-    public function show($id)
+    public function show(Transaction $transaction) : View
     {
-        //
+        return view('transaction.show', compact('transaction'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     *
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property Wallet $payerWallet
+ * @property Wallet $payeeWallet
+ * @property float $ammount
+ */
 class Transaction extends Model
 {
     use HasFactory;
@@ -26,6 +31,26 @@ class Transaction extends Model
     public function currentStatusName() : string
     {
         return TransactionStatus::getStatus($this->attributes['status']);
+    }
+
+    /**
+     * Returns the payee details.
+     *
+     * @return User
+     */
+    public function payee() : User
+    {
+        return $this->payeeWallet->owner;
+    }
+
+    /**
+     * Returns the payer details.
+     *
+     * @return User
+     */
+    public function payer() : User
+    {
+        return $this->payerWallet->owner;
     }
 
     /**

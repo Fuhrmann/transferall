@@ -21,6 +21,28 @@ class Wallet extends Model
     ];
 
     /**
+     * Subtract the specified $value from the wallet.
+     *
+     * @param  float  $value
+     */
+    public function subtract(float $value) : void
+    {
+        $this->attributes['ammount'] -= $value;
+        $this->save();
+    }
+
+    /**
+     * Add the specified $value from the wallet.
+     *
+     * @param  float  $value
+     */
+    public function add(float $value) : void
+    {
+        $this->attributes['ammount'] += $value;
+        $this->save();
+    }
+
+    /**
      * The owner of this wallet.
      *
      * @return BelongsTo
