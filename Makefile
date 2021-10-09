@@ -166,6 +166,10 @@ yarn-dev: ## Compila os assets para produção
 yarn-watch: ## Executa watch para desenv
 	@$(yarn) run watch
 
+fix-styles: ## Executa phpcs-fixer nos arquivos do projeto
+	${INFO} "[phpcs-fixer] Reformatando estilos..."
+	@$(php) vendor/bin/php-cs-fixer fix --config=vendor/fuhrmann/phpcs-fixer-laravel/.php_cs.dist --ansi
+
 build: ## Faz o build da imagem
 	${INFO} "[docker] Criando imagem..."
 	@DOCKER_BUILDKIT=1 \
