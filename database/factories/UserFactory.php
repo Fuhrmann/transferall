@@ -21,7 +21,7 @@ class UserFactory extends Factory
      *
      * @return $this
      */
-    public function configure() : UserFactory
+    public function configure() : self
     {
         return $this->afterCreating(function (User $user) {
             Wallet::factory(['owner_id' => $user->id])->create();
@@ -43,5 +43,4 @@ class UserFactory extends Factory
             'active'         => 1,
         ];
     }
-
 }

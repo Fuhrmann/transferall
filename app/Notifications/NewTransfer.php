@@ -50,5 +50,4 @@ class NewTransfer extends Notification
             'ammount' => $this->transaction->ammount,
         ];
     }
-
 }

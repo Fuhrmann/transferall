@@ -18,7 +18,6 @@ use Throwable;
 
 class TransactionController extends Controller
 {
-
     public function __construct(private TransactionHandler $transactionHandler, private DatabaseManager $db)
     {
     }
@@ -41,6 +40,7 @@ class TransactionController extends Controller
      * @param  TransactionRequest  $request
      *
      * @throws Throwable
+     *
      * @return RedirectResponse
      */
     public function store(TransactionRequest $request) : RedirectResponse
@@ -61,11 +61,13 @@ class TransactionController extends Controller
             $transaction->payee()->notify(new NewTransfer($transaction));
 
             session()->flash('message', 'Transferência realizada com sucesso!');
+
             return redirect()->route('dashboard');
         } catch (TransactionValidationException $e) {
             return back()->withErrors(new MessageBag($e->errors()));
         } catch (Exception $e) {
             Log::error($e);
+
             return back()->withErrors(new MessageBag(['catch_exception' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.']));
         }
     }
@@ -81,5 +83,4 @@ class TransactionController extends Controller
     {
         return view('transaction.show', compact('transaction'));
     }
-
 }

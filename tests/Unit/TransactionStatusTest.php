@@ -7,7 +7,6 @@ use Tests\TestCase;
 
 class TransactionStatusTest extends TestCase
 {
-
     public function test_get_all_transaction_status() : void
     {
         $this->assertIsArray(TransactionStatus::all());
@@ -17,6 +16,4 @@ class TransactionStatusTest extends TestCase
     {
         $this->assertSame('Unknow', TransactionStatus::getStatus(9999));
     }
-
-
 }

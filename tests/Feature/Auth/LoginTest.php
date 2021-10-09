@@ -49,5 +49,4 @@ class LoginTest extends TestCase
         $this->post(route('logout'))->assertRedirect(route('login'));
         $this->assertGuest();
     }
-
 }

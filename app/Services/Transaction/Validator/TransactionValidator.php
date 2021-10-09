@@ -7,7 +7,6 @@ use Illuminate\Pipeline\Pipeline;
 
 class TransactionValidator
 {
-
     private array $validations = [
         ValidateAmmount::class,
         IsNotCompany::class,

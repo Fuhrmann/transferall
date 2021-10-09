@@ -34,7 +34,7 @@ class IndividualUserFactory extends Factory
      *
      * @return IndividualUserFactory
      */
-    public function withCustomUserData(array $userData) : IndividualUserFactory
+    public function withCustomUserData(array $userData) : self
     {
         return $this->state(function () use ($userData) {
             return [

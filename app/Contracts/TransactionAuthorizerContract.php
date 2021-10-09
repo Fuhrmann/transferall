@@ -10,5 +10,4 @@ interface TransactionAuthorizerContract
      * @return bool
      */
     public function isAuthorized() : bool;
-
 }

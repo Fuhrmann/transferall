@@ -33,5 +33,4 @@ class TransactionStatus
     {
         return self::all()[$status] ?? 'Unknow';
     }
-
 }

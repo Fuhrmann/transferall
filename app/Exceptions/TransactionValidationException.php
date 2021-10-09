@@ -6,5 +6,4 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionValidationException extends ValidationException
 {
-
 }

@@ -107,6 +107,4 @@ class TransactionValidatorTest extends TestCase
             };
         });
     }
-
-
 }

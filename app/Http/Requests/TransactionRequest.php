@@ -29,5 +29,4 @@ class TransactionRequest extends FormRequest
             'ammount'         => ['required'],
         ];
     }
-
 }

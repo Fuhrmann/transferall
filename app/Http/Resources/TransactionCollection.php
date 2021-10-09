@@ -9,5 +9,4 @@ use JsonSerializable;
 
 class TransactionCollection extends ResourceCollection
 {
-
 }

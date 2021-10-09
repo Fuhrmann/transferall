@@ -7,11 +7,9 @@ use App\Services\Transaction\Validator\TransactionValidator;
 
 class TransactionHandler
 {
-
     public function __construct(private TransactionValidator $validator, private WalletTransfer $walletTransfer)
     {
     }
-
 
     /**
      * Creates a new transaction.

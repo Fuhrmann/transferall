@@ -21,9 +21,10 @@ class PayServiceChannel
             // Simulate the data being sent to the mock: $id, $data
             $response = Http::get(self::BASE_URL);
 
-            return ($response->status() === Response::HTTP_OK);
+            return $response->status() === Response::HTTP_OK;
         } catch (Exception $e) {
             Log::error($e);
+
             return false;
         }
     }

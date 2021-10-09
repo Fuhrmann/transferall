@@ -18,7 +18,6 @@ use Throwable;
 
 class TransactionController
 {
-
     public function __construct(
         private TransactionHandler $transactionHandler,
         private DatabaseManager $db,
@@ -44,6 +43,7 @@ class TransactionController
      * @param  TransactionRequest  $request
      *
      * @throws Throwable
+     *
      * @return JsonResponse|TransactionResource
      */
     public function store(TransactionRequest $request) : JsonResponse|TransactionResource
@@ -76,6 +76,7 @@ class TransactionController
             ]);
         } catch (Exception $e) {
             Log::error($e);
+
             return response()->json([
                 'code'    => 500,
                 'message' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.',
