@@ -2,6 +2,22 @@
 
 ![Alt text](screenshot1.png "Dashboard")
 
+----
+
+## Avaliação ##
+
+O comando de validação do código foi executado (`jakzal/phpqa`) porém a versão do `phpmd` que se encontra na toolbox é a 2.9.1 e o suporte para o PHP 8.* foi adicionado somente na versão 2.10 ([aqui](https://github.com/phpmd/phpmd/pull/878)). A toolbox do `jakzal` não instala o `phpmd` mais recente pois não tem assinatura gpg.
+
+```
+[WARNING]  phpmd 2.10.2: No GPG Signature
+[WARNING]  phpmd 2.10.1: No GPG Signature
+[WARNING]  phpmd 2.10.0: No GPG Signature
+```
+
+Então os erros encontrados ao rodar tal comando estão relacionados a incompatibilidade do `phpmd` com o PHP 8.
+
+----
+
 ## Instalação local ##
 
 Execute `make install` para executar todos os passos necessários para a inicialização do projeto e dos containers. Após executar este comando, caso queira verificar a disponibilidade dos containers e se estão rodando, execute `make ps`.
