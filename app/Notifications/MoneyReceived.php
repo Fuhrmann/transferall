@@ -3,10 +3,12 @@
 namespace App\Notifications;
 
 use App\Models\Transaction;
+use App\Notifications\Channels\PayServiceChannel;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class NewTransfer extends Notification
+class MoneyReceived extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -21,6 +23,8 @@ class NewTransfer extends Notification
     {
         $this->transaction = $transaction;
         $this->transaction->load('payerWallet', 'payeeWallet');
+
+        $this->afterCommit = true;
     }
 
     /**
@@ -32,7 +36,7 @@ class NewTransfer extends Notification
      */
     public function via($notifiable) : array
     {
-        return ['payservice'];
+        return [PayServiceChannel::class];
     }
 
     /**

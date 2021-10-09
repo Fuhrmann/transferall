@@ -7,7 +7,6 @@ use App\Http\Requests\TransactionRequest;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
-use App\Notifications\NewTransfer;
 use App\Services\Transaction\LoadTransactionsForUser;
 use App\Services\Transaction\TransactionHandler;
 use Exception;
@@ -43,17 +42,11 @@ class TransactionController
      * @param  TransactionRequest  $request
      *
      * @throws Throwable
-     *
      * @return JsonResponse|TransactionResource
      */
     public function store(TransactionRequest $request) : JsonResponse|TransactionResource
     {
         try {
-            // Dois controllers parecidos, que fazem coisas iguais. Porém, mantendo-os
-            // separados podemos permitir que seja feita a manutenção de forma mais
-            // rápida, pois este é da API e pode se comportar de maneira diferente
-            // visto que esta é uma aplicação pequena essa duplicação não é tão
-            // custosa como outras que poderiam ocorrer em outros locais
             $transaction = $this->db->transaction(function () use ($request) {
                 return $this->transactionHandler->create(
                     $request->get('wallet_payer_id', auth()->user()->walletId()),
@@ -61,12 +54,6 @@ class TransactionController
                     $request->get('ammount', 0)
                 );
             });
-
-            // Eu deixe essa chamada para notificação tanto aqui como no controller da API
-            // só para deixar explicito quando e como a notificação é enviada. Eu entendo
-            // que o código está se repetindo em dois controles, mas neste caso eu acho
-            // que deixar explícito é melhor do que esconder essas chamadas
-            $transaction->payee()->notify(new NewTransfer($transaction));
 
             return new TransactionResource($transaction);
         } catch (TransactionValidationException $e) {

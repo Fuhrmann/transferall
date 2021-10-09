@@ -62,6 +62,14 @@ Para executar os testes basta rodar:
 
 ```make run-tests``` ou `docker-compose exec php php artisan test`
 
+## Queue ##
+
+O envio de e-mail (notificações) é realizado utilizando uma queue. Para acessar o log de forma fácil e visualizar os e-mails enviados em tempo real basta executar:
+
+```make logs queue```
+
+
+
 ------
 
 ## Endpoints

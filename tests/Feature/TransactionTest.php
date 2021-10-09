@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Contracts\TransactionAuthorizerContract;
 use App\Models\CompanyUser;
 use App\Models\IndividualUser;
-use App\Notifications\NewTransfer;
+use App\Notifications\MoneyReceived;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -51,7 +51,7 @@ class TransactionTest extends TestCase
             ->assertStatus(200)
             ->assertSeeText('Transferência realizada com sucesso');
 
-        Notification::assertSentTo($this->payee->profile, NewTransfer::class);
+        Notification::assertSentTo($this->payee->profile, MoneyReceived::class);
     }
 
     /**

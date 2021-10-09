@@ -3,6 +3,7 @@
 namespace App\Services\Transaction;
 
 use App\Models\Transaction;
+use App\Notifications\MoneyReceived;
 use App\Services\Transaction\Validator\TransactionValidator;
 
 class TransactionHandler
@@ -35,6 +36,8 @@ class TransactionHandler
         ]);
 
         $this->walletTransfer->transferWithTransaction($transaction);
+
+        $transaction->payee()->notify(new MoneyReceived($transaction));
 
         return $transaction;
     }
