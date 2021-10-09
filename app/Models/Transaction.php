@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\TransactionStatus;
+use App\Services\Transaction\TransactionStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

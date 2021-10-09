@@ -4,7 +4,6 @@ namespace App\Services\Transaction;
 
 use App\Models\Transaction;
 use App\Services\Transaction\Validator\TransactionValidator;
-use App\TransactionStatus;
 
 class TransactionHandler
 {

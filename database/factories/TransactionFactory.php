@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Wallet;
-use App\TransactionStatus;
+use App\Services\Transaction\TransactionStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TransactionFactory extends Factory

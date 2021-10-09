@@ -4,21 +4,39 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Exceptions\TransactionValidationException;
 use App\Http\Requests\TransactionRequest;
+use App\Http\Resources\TransactionCollection;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Notifications\NewTransfer;
+use App\Services\Transaction\LoadTransactionsForUser;
 use App\Services\Transaction\TransactionHandler;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class TransactionController
 {
 
-    public function __construct(private TransactionHandler $transactionHandler, private DatabaseManager $db)
+    public function __construct(
+        private TransactionHandler $transactionHandler,
+        private DatabaseManager $db,
+        private LoadTransactionsForUser $loadTransactionsForUser
+    ) {
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return TransactionCollection
+     */
+    public function index() : TransactionCollection
     {
+        $transactions = $this->loadTransactionsForUser->load(auth()->user());
+
+        return new TransactionCollection($transactions);
     }
 
     /**

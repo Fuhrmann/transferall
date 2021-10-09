@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\TransactionStatus;
+use App\Services\Transaction\TransactionStatus;
 use Tests\TestCase;
 
 class TransactionStatusTest extends TestCase

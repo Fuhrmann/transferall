@@ -126,7 +126,7 @@ WORKDIR /var/www/html
 
 RUN npm config set scripts-prepend-node-path true
 
-COPY yarn.lock package.json webpack.config.js webpack.mix.js ./
+COPY yarn.lock package.json webpack.mix.js ./
 RUN set -x \
     && yarn install --production=false \
         --frozen-lockfile \

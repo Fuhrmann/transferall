@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run() : void
     {
+        IndividualUser::factory()->withCustomUserData(['email' => 'demo@demo.com.br', 'name' => 'Usuário Demonstração'])->create();
         IndividualUser::factory(3)->create();
         CompanyUser::factory(3)->create();
     }

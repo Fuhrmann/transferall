@@ -28,4 +28,18 @@ class IndividualUserFactory extends Factory
             'date_of_birthday' => $this->faker->date(),
         ];
     }
+
+    /**
+     * @param  array  $userData
+     *
+     * @return IndividualUserFactory
+     */
+    public function withCustomUserData(array $userData) : IndividualUserFactory
+    {
+        return $this->state(function () use ($userData) {
+            return [
+                'user_id' => User::factory($userData)->create(),
+            ];
+        });
+    }
 }

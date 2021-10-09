@@ -10,6 +10,9 @@ DEV_COMPOSE=-f docker-compose.yml -f docker-compose.dev.yml
 # Arquivos do compose para ambiente produção
 PROD_COMPOSE=-f docker-compose.yml -f docker-compose.prod.yml
 
+# Arquivos do compose para expor as portas dos serviços
+PORTS_COMPOSE=-f docker-compose.ports.yml
+
 # Arquivos do compose com serviços de vida limitada
 SERVICES_COMPOSE=${DEV_COMPOSE} -f docker-compose.services.yml
 
@@ -28,6 +31,11 @@ endif
 COMPOSE_FILE=${DEV_COMPOSE}
 ifeq ($(APP_ENV), production)
 	COMPOSE_FILE=${PROD_COMPOSE}
+endif
+
+# Define se iremos expor as portas
+ifdef DOCKER_NGINX_PORT
+	COMPOSE_FILE:=${COMPOSE_FILE} ${PORTS_COMPOSE}
 endif
 
 # Pega os argumentos passados
