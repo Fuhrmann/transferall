@@ -120,7 +120,7 @@ seed-class: ## Roda o seeder especificando a classe
 	${INFO} "[artisan] Executando seed no banco de dados..."
 	@$(php) php artisan db:seed --class=${args}
 
-testes: ## Roda os testes unitários
+run-tests: ## Roda os testes unitários
 	${INFO} "[artisan] Executando testes..."
 	@$(php) php artisan test
 

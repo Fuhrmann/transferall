@@ -56,7 +56,13 @@ Para se conectar ao banco de dados basta executar na raiz do projeto:
 
 que o console do MySQL irá abrir em seu terminal pronto para ser utilizado.
 
----
+## Testes ##
+
+Para executar os testes basta rodar:
+
+```make run-tests``` ou `docker-compose exec php php artisan test`
+
+------
 
 ## Endpoints
 
@@ -176,4 +182,4 @@ que o console do MySQL irá abrir em seu terminal pronto para ser utilizado.
 
 ### Observações ###
 
-Em caso de dúvida em relação aos comandos basta digitar "make" na raiz do projeto e uma lista de comandos irá aparecer com suas explicações.
+Em caso de dúvida em relação aos comandos disponíveis basta executar `make` na raiz do projeto e uma lista de comandos irá aparecer com suas explicações.
