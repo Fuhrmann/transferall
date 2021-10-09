@@ -18,7 +18,7 @@ class GatewayAuthorization implements TransactionValidation
     public function validate(array $data, Closure $next) : bool
     {
         if (! $this->authorizer->isAuthorized()) {
-            throw TransactionValidationException::withMessages(['user' => 'Not authorized. Try again in a few minutes.']);
+            throw TransactionValidationException::withMessages(['user' => 'Não autorizado. Tente novament em alguns minutos.']);
         }
 
         return $next($data);

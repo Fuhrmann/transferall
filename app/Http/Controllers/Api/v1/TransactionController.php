@@ -13,7 +13,6 @@ use App\Services\Transaction\TransactionHandler;
 use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 

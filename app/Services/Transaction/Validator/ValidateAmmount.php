@@ -13,7 +13,7 @@ class ValidateAmmount implements TransactionValidation
     public function validate(array $data, Closure $next) : bool
     {
         if ($data['ammount'] <= 0) {
-            throw TransactionValidationException::withMessages(['ammount' => 'Please inform the value you want to transfer.']);
+            throw TransactionValidationException::withMessages(['ammount' => 'Por favor informe um valor para transferir.']);
         }
 
         return $next($data);

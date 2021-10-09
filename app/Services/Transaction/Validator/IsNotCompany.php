@@ -13,7 +13,7 @@ class IsNotCompany implements TransactionValidation
     public function validate(array $data, Closure $next) : bool
     {
         if ($data['payerWallet']->owner->companyProfile) {
-            throw TransactionValidationException::withMessages(['user' => 'You are not allowed to transfer money to other accounts.']);
+            throw TransactionValidationException::withMessages(['user' => 'Você não tem permissão para realizar transferências.']);
         }
 
         return $next($data);

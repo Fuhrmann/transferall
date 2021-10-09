@@ -18,7 +18,7 @@ class HasEnoughBalance implements TransactionValidation
     public function validate(array $data, Closure $next) : bool
     {
         if (! $this->balanceChecker->hasBalance($data['payerWallet'])) {
-            throw TransactionValidationException::withMessages(['user' => 'You dont have enough balance to transfer from your account.']);
+            throw TransactionValidationException::withMessages(['user' => 'Você não tem saldo suficiente para fazer uma transferência.']);
         }
 
         return $next($data);
