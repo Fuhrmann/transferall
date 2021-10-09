@@ -59,14 +59,13 @@ ifeq ($(APP_ENV), production)
 	@docker-compose ${COMPOSE_FILE} exec php php artisan optimize
 endif
 
-install: ## Instala o projeto local do zero
+copy-env:
 	@cp .env.example .env
-	@$(MAKE) composer-install
-	@$(MAKE) yarn-install
-	@$(MAKE) up
-	@$(MAKE) key
-	@$(MAKE) migrate
-	@$(MAKE) seed
+
+wait-for-mysql:
+	@APP_PROJECT_NAME=${APP_PROJECT_NAME} ./docker/bin/wait-for-mysql.sh
+
+install: copy-env composer-install yarn-install up wait-for-mysql key migrate seed ## Instala o projeto local do zero
 	${INFO} "[docker] Aplicação inicializada com sucesso!"
 
 up-build: ## Inicia os containers e recria-os caso necessário
@@ -95,12 +94,12 @@ logs: ## Exibe todos os logs (ou especifique os containers)
 
 key: ## Gera a APP_KEY
 	${INFO} "[artisan] Gerando a chave da aplicação..."
-	@$(php) php artisan key:generate ${args}
+	@$(php) php artisan key:generate
 	${INFO} "[artisan] Chave gerada com sucesso!"
 
 migrate: ## Migra o banco de dados
 	${INFO} "[artisan] Migrando banco de dados..."
-	@$(php) php artisan migrate ${args}
+	@$(php) php artisan migrate
 	${INFO} "[artisan] Migração concluída!"
 
 migrate-rollback: ## Rollback no banco de dados
@@ -114,7 +113,7 @@ migration: ## Cria nova migration
 
 seed: ## Roda o seeder
 	${INFO} "[artisan] Executando seed no banco de dados..."
-	@$(php) php artisan db:seed ${args}
+	@$(php) php artisan db:seed
 
 seed-class: ## Roda o seeder especificando a classe
 	${INFO} "[artisan] Executando seed no banco de dados..."
@@ -125,7 +124,7 @@ run-tests: ## Roda os testes unitários
 	@$(php) php artisan test
 
 redis-monitor: ## Monitora redis
-	@echo "[docker] Iniciando monitoramento do redis..."
+	${INFO} "[docker] Iniciando monitoramento do redis..."
 	$(redis) redis-cli MONITOR
 
 composer: ## Executa um comando no composer utilizando os parametros passados
