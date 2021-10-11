@@ -2,44 +2,42 @@
 
 namespace Tests\Feature;
 
-use App\Contracts\TransactionAuthorizerContract;
-use App\Models\CompanyUser;
-use App\Models\IndividualUser;
 use App\Notifications\MoneyReceived;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Testing\TestResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
+use Tests\Traits\CreatesTransaction;
 use Tests\Traits\LoggedIn;
 
 class TransactionTest extends TestCase
 {
-    use RefreshDatabase, LoggedIn;
+    use RefreshDatabase, LoggedIn, CreatesTransaction;
 
-    private Model $payer;
-
-    private Model $payee;
+    /**
+     * @var string|null
+     */
+    private ?string $prefix = null;
 
     public function test_transfer_money_page_rendered() : void
     {
         $response = $this->get(route('transaction.create'));
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     public function test_user_can_transfer_successfully() : void
     {
         $this
             ->followingRedirects()
-            ->postNewTransaction()
-            ->assertStatus(200)
+            ->postNewTransaction('transaction.store')
+            ->assertStatus(Response::HTTP_OK)
             ->assertSeeText('Transferência realizada com sucesso');
     }
 
     public function test_session_receive_errors_if_something_is_wrong() : void
     {
         $this
-            ->postNewTransaction(true)
+            ->postNewTransaction('transaction.store', true)
             ->assertSessionHas('errors');
     }
 
@@ -47,48 +45,11 @@ class TransactionTest extends TestCase
     {
         $this
             ->followingRedirects()
-            ->postNewTransaction()
-            ->assertStatus(200)
+            ->postNewTransaction('transaction.store')
+            ->assertStatus(Response::HTTP_OK)
             ->assertSeeText('Transferência realizada com sucesso');
 
         Notification::assertSentTo($this->payee->profile, MoneyReceived::class);
     }
 
-    /**
-     * Send a new transaction using fake data.
-     *
-     * @param  bool  $shouldFail
-     *
-     * @return TestResponse
-     */
-    protected function postNewTransaction(bool $shouldFail = false) : TestResponse
-    {
-        Notification::fake();
-
-        $this->payer = IndividualUser::factory()->create();
-        $this->payee = CompanyUser::factory()->create();
-        $this->login($this->payer->profile);
-
-        return $this->post(route('transaction.store'), [
-            'wallet_payer_id' => $this->payer->profile->walletId(),
-            'wallet_payee_id' => $this->payee->profile->walletId(),
-            'ammount'         => $shouldFail ? 0 : 1000,
-        ]);
-    }
-
-    protected function setUp() : void
-    {
-        parent::setUp();
-
-        $this->app->bind(TransactionAuthorizerContract::class, function () {
-            return new class implements TransactionAuthorizerContract {
-                public function isAuthorized() : bool
-                {
-                    return true;
-                }
-            };
-        });
-
-        $this->login();
-    }
 }

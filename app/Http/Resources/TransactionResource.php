@@ -26,7 +26,7 @@ class TransactionResource extends JsonResource
             'to_name'         => $this->whenLoaded('payeeWallet', function () {
                 return $this->payee()->name;
             }),
-            'ammount'         => $this->ammount,
+            'ammount'         => (float) $this->ammount,
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
         ];

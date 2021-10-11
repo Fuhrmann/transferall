@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 use Tests\Traits\LoggedIn;
 
@@ -16,7 +17,7 @@ class LoginTest extends TestCase
     public function test_login_screen_can_be_rendered() : void
     {
         $response = $this->get(route('login'));
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
     }
 
     public function test_user_can_login_successfully() : void

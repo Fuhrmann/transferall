@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class TransactionController
@@ -59,16 +60,14 @@ class TransactionController
             return new CreateTransactionResource($transaction);
         } catch (TransactionValidationException $e) {
             return response()->json([
-                'code'    => 401,
                 'message' => $e->getMessage(),
-            ]);
+            ])->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
         } catch (Exception $e) {
             Log::error($e);
 
             return response()->json([
-                'code'    => 500,
                 'message' => 'Houve um erro ao realizar a transferência, contate o suporte técnico.',
-            ]);
+            ])->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
