@@ -104,14 +104,26 @@ O envio de e-mail (notificações) é realizado utilizando uma queue. Para acess
 {
     "data": [
         {
-            "id": 1,
+            "id": 23,
             "wallet_payer_id": 2,
             "wallet_payee_id": 3,
             "from_name": "Usuário Demonstração",
             "to_name": "Miguel Soares Matos Sobrinho",
-            "ammount": "1600.00",
+            "ammount": 1600.00,
             "created_at": "2021-10-09T01:30:18.000000Z",
-            "updated_at": "2021-10-09T01:30:18.000000Z"
+            "updated_at": "2021-10-09T01:30:18.000000Z",
+            "_links": [
+                {
+                    "rel": "self",
+                    "type": "GET",
+                    "href": "https://localhost/api/transactions/23"
+                },
+                {
+                    "rel": "create",
+                    "type": "POST",
+                    "href": "https://localhost/api/transactions"
+                }
+            ]
         }
     ]
 }
@@ -135,9 +147,21 @@ O envio de e-mail (notificações) é realizado utilizando uma queue. Para acess
         "wallet_payee_id": 3,
         "from_name": "Usuário Demonstração",
         "to_name": "Miguel Soares Matos Sobrinho",
-        "ammount": "1600.00",
+        "ammount": 1600.00,
         "created_at": "2021-10-09T01:30:18.000000Z",
-        "updated_at": "2021-10-09T01:30:18.000000Z"
+        "updated_at": "2021-10-09T01:30:18.000000Z",
+        "_links": [
+            {
+                "rel": "self",
+                "type": "GET",
+                "href": "https://localhost/api/transactions/1"
+            },
+            {
+                "rel": "create",
+                "type": "POST",
+                "href": "https://localhost/api/transactions"
+            }
+        ]
     }
 }
 ```
@@ -166,14 +190,26 @@ O envio de e-mail (notificações) é realizado utilizando uma queue. Para acess
 {
     "data": [
         {
-            "id": 1,
+            "id": 90,
             "wallet_payer_id": 1,
             "wallet_payee_id": 2,
             "from_name": "Usuário Demonstração",
             "to_name": "Miguel Soares Matos Sobrinho",
-            "ammount": "1200.00",
+            "ammount": 1200.00,
             "created_at": "2021-10-09T01:30:18.000000Z",
-            "updated_at": "2021-10-09T01:30:18.000000Z"
+            "updated_at": "2021-10-09T01:30:18.000000Z",
+            "_links": [
+                {
+                    "rel": "self",
+                    "type": "GET",
+                    "href": "https://localhost/api/transactions/90"
+                },
+                {
+                    "rel": "create",
+                    "type": "POST",
+                    "href": "https://localhost/api/transactions"
+                }
+            ]
         }
     ]
 }
@@ -195,9 +231,16 @@ O envio de e-mail (notificações) é realizado utilizando uma queue. Para acess
         "id": 1,
         "name": "Sra. Andressa Arruda Fernandes Filho",
         "email": "imontenegro@example.net",
-        "balance": "8491.00",
+        "balance": 8491.00,
         "created_at": "2021-10-09T01:24:39.000000Z",
-        "updated_at": "2021-10-09T01:24:39.000000Z"
+        "updated_at": "2021-10-09T01:24:39.000000Z",
+        "_links": [
+            {
+                "rel": "self",
+                "type": "GET",
+                "href": "https://localhost/api/users/1"
+            }
+        ]
     }
 }
 ```

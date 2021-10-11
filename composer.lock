@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b91fad8aafbaa4cc7f0980044c93dda3",
+    "content-hash": "11610752844124a45308fc3d9048cb84",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -577,6 +577,70 @@
                 }
             ],
             "time": "2021-04-26T11:24:25+00:00"
+        },
+        {
+            "name": "gdebrauwer/laravel-hateoas",
+            "version": "1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gdebrauwer/laravel-hateoas.git",
+                "reference": "bbbea36339c5aefc385582b78d40a14abe8bb5d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gdebrauwer/laravel-hateoas/zipball/bbbea36339c5aefc385582b78d40a14abe8bb5d2",
+                "reference": "bbbea36339c5aefc385582b78d40a14abe8bb5d2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^7.3|^8.0",
+                "spatie/once": "^2.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^9.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "GDebrauwer\\Hateoas\\HateoasServiceProvider"
+                    ],
+                    "aliases": {
+                        "Hateoas": "GDebrauwer\\Hateoas\\Hateoas"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GDebrauwer\\Hateoas\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Günther Debrauwer"
+                }
+            ],
+            "description": "Expose the authorization logic of your REST API using HATEOAS links on your Laravel API resources",
+            "homepage": "https://github.com/gdebrauwer/laravel-hateoas",
+            "keywords": [
+                "HATEOAS",
+                "api",
+                "gdebrauwer",
+                "laravel",
+                "rest-api"
+            ],
+            "support": {
+                "issues": "https://github.com/gdebrauwer/laravel-hateoas/issues",
+                "source": "https://github.com/gdebrauwer/laravel-hateoas/tree/1.6.1"
+            },
+            "time": "2021-07-24T12:38:34+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -2830,6 +2894,68 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
+        },
+        {
+            "name": "spatie/once",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/once.git",
+                "reference": "e6c13ae474a7d4b30975ef6a502a593874ac12d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/once/zipball/e6c13ae474a7d4b30975ef6a502a593874ac12d2",
+                "reference": "e6c13ae474a7d4b30975ef6a502a593874ac12d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Once\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A magic memoization function",
+            "homepage": "https://github.com/spatie/once",
+            "keywords": [
+                "cache",
+                "callable",
+                "memozation",
+                "once",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/once/issues",
+                "source": "https://github.com/spatie/once/tree/2.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-10-29T18:22:10+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

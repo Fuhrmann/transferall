@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0",
         "fruitcake/laravel-cors": "^2.0",
+        "gdebrauwer/laravel-hateoas": "^1.6",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",

@@ -2,11 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Hateoas\TransactionHateoas;
+use GDebrauwer\Hateoas\Traits\HasLinks;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TransactionResource extends JsonResource
 {
+    use HasLinks;
+
     /**
      * Transform the resource into an array.
      *
@@ -29,6 +33,7 @@ class TransactionResource extends JsonResource
             'ammount'         => (float) $this->ammount,
             'created_at'      => $this->created_at,
             'updated_at'      => $this->updated_at,
+            '_links'          => $this->links(TransactionHateoas::class),
         ];
     }
 }
