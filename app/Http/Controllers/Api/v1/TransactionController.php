@@ -44,6 +44,7 @@ class TransactionController
      * @param  TransactionRequest  $request
      *
      * @throws Throwable
+     *
      * @return JsonResponse|TransactionResource
      */
     public function store(TransactionRequest $request) : JsonResponse|CreateTransactionResource

@@ -39,6 +39,7 @@ class TransactionController extends Controller
      * @param  TransactionRequest  $request
      *
      * @throws Throwable
+     *
      * @return RedirectResponse
      */
     public function store(TransactionRequest $request) : RedirectResponse

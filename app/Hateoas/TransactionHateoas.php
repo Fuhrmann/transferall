@@ -31,5 +31,4 @@ class TransactionHateoas
     {
         return $this->link('api.transactions.store');
     }
-
 }

@@ -34,5 +34,4 @@ class TransactionTest extends TestCase
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonFragment(['id' => 1, 'ammount' => 9000]);
     }
-
 }

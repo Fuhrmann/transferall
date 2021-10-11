@@ -51,5 +51,4 @@ class TransactionTest extends TestCase
 
         Notification::assertSentTo($this->payee->profile, MoneyReceived::class);
     }
-
 }
