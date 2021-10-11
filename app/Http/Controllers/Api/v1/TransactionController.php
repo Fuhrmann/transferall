@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Exceptions\TransactionValidationException;
 use App\Http\Requests\TransactionRequest;
+use App\Http\Resources\CreateTransactionResource;
 use App\Http\Resources\TransactionCollection;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
@@ -44,7 +45,7 @@ class TransactionController
      * @throws Throwable
      * @return JsonResponse|TransactionResource
      */
-    public function store(TransactionRequest $request) : JsonResponse|TransactionResource
+    public function store(TransactionRequest $request) : JsonResponse|CreateTransactionResource
     {
         try {
             $transaction = $this->db->transaction(function () use ($request) {
@@ -55,7 +56,7 @@ class TransactionController
                 );
             });
 
-            return new TransactionResource($transaction);
+            return new CreateTransactionResource($transaction);
         } catch (TransactionValidationException $e) {
             return response()->json([
                 'code'    => 401,
