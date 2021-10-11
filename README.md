@@ -20,9 +20,9 @@ Então os erros encontrados ao rodar tal comando estão relacionados a incompati
 
 ## Instalação local ##
 
-Execute `make install` para executar todos os passos necessários para a inicialização do projeto e dos containers. Após executar este comando, caso queira verificar a disponibilidade dos containers e se estão rodando, execute `make ps`.
+Execute `make install` para inicializar o sistema e os containers. Caso queira verificar a disponibilidade dos containers a qualquer momento, execute `make ps`.
 
-No meu caso estou utilizando o **Caddy** para gerenciar meus projetos sem precisar expor as portas utilizando o docker, então adicionei uma nova regra no arquivo de configuração do **Caddy** e especifiquei como proxy reverso:
+Estou utilizando o **Caddy** para gerenciar meus projetos sem precisar expor as portas utilizando o docker, então adicionei uma nova regra no arquivo de configuração do **Caddy** e especifiquei como proxy reverso:
 
 ```
 desafio.local.dev {
@@ -80,7 +80,7 @@ Para executar os testes basta rodar:
 
 ## Queue ##
 
-O envio de e-mail (notificações) é realizado utilizando uma queue. Para acessar o log de forma fácil e visualizar os e-mails enviados em tempo real basta executar:
+O envio de e-mail (notificações) é realizado através de uma queue. Para acessar o log de forma fácil e visualizar os e-mails enviados em tempo real basta executar:
 
 ```make logs queue```
 
